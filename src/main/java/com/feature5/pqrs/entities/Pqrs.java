@@ -120,4 +120,8 @@ public class Pqrs {
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
     }
+
+    public void setIdPqrs(Long idPqrs) { // <-- MÉTODO NUEVO
+        this.idPqrs = idPqrs;
+    }
 }
