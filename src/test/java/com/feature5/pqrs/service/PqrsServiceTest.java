@@ -153,7 +153,7 @@ class PqrsServiceTest {
         PqrsDTO dtoConActualizaciones = new PqrsDTO();
         dtoConActualizaciones.setDescripcion("Descripción actualizada");
 
-        // Creamos una PQRS "existente" que el repositorio encontrará
+        // Creamos una PQRS "existente" que el repositorio encontrará.
         Pqrs pqrsExistenteMock = new Pqrs();
         pqrsExistenteMock.setIdPqrs(pqrsId);
         pqrsExistenteMock.setDescripcion("Descripción original");
