@@ -10,12 +10,7 @@ class Feature5PqrsApplicationTest {
 
     @Test
     void contextLoads(ApplicationContext context) {
-        // Esta es la prueba de "humo" más simple.
-        // Si la aplicación no puede arrancar, esta prueba fallará.
 
-        // 1. Arrange (El contexto es inyectado por @SpringBootTest)
-
-        // 2. Act (No se necesita ninguna acción, el arranque es la acción)
 
         // 3. Assert
         // Verificamos que el contexto de la aplicación no es nulo.

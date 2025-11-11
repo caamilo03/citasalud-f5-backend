@@ -31,7 +31,7 @@ class AuthControllerTest {
     @MockBean
     private UsuarioService usuarioService;
 
-    @MockBean // AuthController SÍ necesita JwtUtils, así que este @MockBean se queda
+    @MockBean
     private JwtUtils jwtUtils;
 
     @Autowired

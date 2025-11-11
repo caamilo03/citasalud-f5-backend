@@ -34,13 +34,12 @@ class UsuarioServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    // --- Inyectar mocks en el servicio ---
     @InjectMocks
     private UsuarioService usuarioService;
 
     @Test
     void registrarUsuario_conDatosValidos_debeGuardarUsuarioConRolUser() {
-        // 1. Arrange (Organizar)
+        // 1. Arrange
         UsuarioDTO dtoEntrada = new UsuarioDTO();
         dtoEntrada.setEmail("test@example.com");
         dtoEntrada.setNickname("testuser");
@@ -50,12 +49,9 @@ class UsuarioServiceTest {
 
         Rol rolUser = new Rol(3L, "Usuario");
 
-        // --- INICIO DE LA CORRECCIÓN ---
-        // Creamos un objeto 'usuarioGuardado' más realista, que ya incluye el rol.
         Usuario usuarioGuardado = new Usuario();
         usuarioGuardado.setIdUsuario(1L);
-        usuarioGuardado.setRol(rolUser); // <-- ¡ESTA ES LA LÍNEA CLAVE!
-        // --- FIN DE LA CORRECCIÓN ---
+        usuarioGuardado.setRol(rolUser); //
 
         UsuarioDTO dtoEsperado = new UsuarioDTO();
         dtoEsperado.setIdUsuario(1L);
@@ -69,10 +65,10 @@ class UsuarioServiceTest {
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuarioGuardado); // Ahora devolvemos el objeto completo
         when(usuarioMapper.toDto(usuarioGuardado)).thenReturn(dtoEsperado);
 
-        // 2. Act (Actuar)
+        // 2. Act
         UsuarioDTO resultado = usuarioService.registrarUsuario(dtoEntrada);
 
-        // 3. Assert (Afirmar)
+        // 3. Assert
         assertNotNull(resultado);
         assertEquals(1L, resultado.getIdUsuario());
         verify(usuarioRepository, times(1)).save(any(Usuario.class));

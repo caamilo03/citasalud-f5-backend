@@ -22,7 +22,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// --- ARREGLO AQUÍ: Desactivamos la seguridad para esta prueba ---
 @WebMvcTest(value = RolController.class,
         excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 class RolControllerTest {
@@ -34,7 +33,6 @@ class RolControllerTest {
     private RolService rolService;
 
     @MockBean private JwtUtils jwtUtils;
-    // Ya no necesitamos mockear JwtUtils
 
     @Autowired
     private ObjectMapper objectMapper;

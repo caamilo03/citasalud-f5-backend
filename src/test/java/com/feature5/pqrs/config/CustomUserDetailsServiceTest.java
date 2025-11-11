@@ -67,14 +67,10 @@ class CustomUserDetailsServiceTest {
     @Test
     void loadUserByUsername_conAdminEspecial_debeRetornarAdminDetails() {
         // 1. Arrange
-        // --- INICIO DE LA CORRECCIÓN ---
-        // Inyectamos manualmente los valores que Spring @Value haría
         ReflectionTestUtils.setField(customUserDetailsService, "adminUsername", "admin_test_user");
         ReflectionTestUtils.setField(customUserDetailsService, "adminPassword", "admin_test_pass");
-        // --- FIN DE LA CORRECCIÓN ---
 
         when(passwordEncoder.encode("admin_test_pass")).thenReturn("adminpass_encoded");
-
         // 2. Act
         UserDetails userDetails = customUserDetailsService.loadUserByUsername("admin");
 

@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// --- ARREGLO AQUÍ: Desactivamos la seguridad ---
 @WebMvcTest(value = PqrsController.class,
         excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 
@@ -36,16 +35,13 @@ class PqrsControllerTest {
     @MockBean
     private PqrsService pqrsService;
 
-    // --- 2. ¡AQUÍ ESTÁ LA LÍNEA QUE FALTABA! ---
-    // La SecurityConfig (aunque excluida) a veces es terca.
-    // Añadir esto le da a Spring el "bean" que le faltaba.
+
     @MockBean
     private JwtUtils jwtUtils;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    // ... (El resto del archivo es idéntico y ya está correcto) ...
 
     @Test
     void listarPqrs_debeRetornarListaDePqrs() throws Exception {

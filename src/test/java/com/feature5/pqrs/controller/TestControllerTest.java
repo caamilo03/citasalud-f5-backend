@@ -15,7 +15,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// Desactivamos la seguridad y probamos solo este controlador
 @WebMvcTest(value = TestController.class,
         excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 class TestControllerTest {
@@ -26,7 +25,6 @@ class TestControllerTest {
     @MockBean
     private JdbcTemplate jdbcTemplate; // TestController depende de esto
 
-    // --- 2. ¡AQUÍ ESTÁ LA LÍNEA QUE FALTABA! ---
     @MockBean
     private JwtUtils jwtUtils;
 
@@ -44,7 +42,6 @@ class TestControllerTest {
 
     @Test
     void seguroEndpoint_debeRetornarOk() throws Exception {
-        // Como la seguridad está desactivada en la prueba, esperamos 200 OK
         mockMvc.perform(get("/api/test/seguro"))
                 .andExpect(status().isOk());
     }
@@ -52,7 +49,6 @@ class TestControllerTest {
     @Test
     void verificarTipos_debeRetornarOk() throws Exception {
         // 1. Arrange
-        // Simulamos la llamada a la base de datos
         when(jdbcTemplate.queryForList(anyString())).thenReturn(Collections.emptyList());
 
         // 2. Act & 3. Assert

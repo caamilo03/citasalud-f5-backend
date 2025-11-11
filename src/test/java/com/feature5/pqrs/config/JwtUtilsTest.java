@@ -9,12 +9,11 @@ import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Usamos SpringBootTest para que inyecte las propiedades (secret, expiration) en JwtUtils
 @SpringBootTest
-// Le damos valores de prueba a nuestras propiedades de JWT
+// Le doy valores de prueba a las propiedades de JWT
 @TestPropertySource(properties = {
         "jwt.secret=testsecretkeyparalaspruebasunitariasqueesbienlarga",
-        "jwt.expiration=3600000" // 1 hora
+        "jwt.expiration=3600000"
 })
 class JwtUtilsTest {
 

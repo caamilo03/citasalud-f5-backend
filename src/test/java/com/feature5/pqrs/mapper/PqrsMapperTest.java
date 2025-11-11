@@ -66,11 +66,9 @@ class PqrsMapperTest {
 
         // 3. Assert
         assertNotNull(entidad);
-        // Los mappers ignoran las entidades anidadas (Usuario, Tipo), lo cual es correcto
         assertNull(entidad.getUsuario());
         assertNull(entidad.getTipo());
 
-        // Verificamos los campos que sí se mapean
         assertEquals(dto.getEstado(), entidad.getEstadoTexto());
         assertEquals(dto.getRadicado(), entidad.getRadicado());
         assertEquals(dto.getDescripcion(), entidad.getDescripcion());
