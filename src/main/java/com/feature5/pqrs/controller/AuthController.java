@@ -53,7 +53,7 @@ public class AuthController {
                         {
                             "role": "ROLE_USER",
                             "email": "test@example.com",
-                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTa5MTk2NzE1MSwiZXhwIjoxNzYxOTcwNzUxfQ.IKbUsQPv6tUJlGu9SfDbMwqOJzrGy3I8mgChpontXL0",
+                            "token": "eyJhbGciOiJIType.YOUR_PAYLOAD_HERE.YOUR_SIGNATURE_HERE",
                             "username": "testuser"
                         }
                         """
