@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  # ---------------------------
+
   # 1. SonarCloud + Tests
   # ---------------------------
   sonarcloud:
@@ -48,96 +48,95 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      # --- INICIO DE LA CORRECCIÓN ---
-      # Comando combinado en una sola línea para evitar errores de sintaxis del shell.
+
       - name: Build, Test, and Analyze with SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B clean verify jacoco:report sonar:sonar -Dsonar.projectKey=caamilo03_citasalud-f5-backend -Dsonar.organization=caamilo03 -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-      # --- FIN DE LA CORRECCIÓN ---
+
 
 
   # ---------------------------
   # 2. Build & Docker Push
   # ---------------------------
-  build:
-    needs: sonarcloud
-    name: Build & Push Docker Image
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+#  build:
+#    needs: sonarcloud
+#    name: Build & Push Docker Image
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v4
+#        with:
+#          distribution: 'temurin'
+#          java-version: '17'
+#          cache: 'maven'
+#
+#      - name: Build with Maven
+#        run: mvn -B package -DskipTests --file pom.xml
+#
+#      - name: Upload JAR
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: artifact
+#          path: target/pqrs-0.0.1-SNAPSHOT.jar
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-          cache: 'maven'
+#     - name: Build & push Docker image
+#        uses: mr-smithers-excellent/docker-build-push@v6
+#       with:
+#          image: quirama11/pqrs-backend
+#          tags: latest
+#          registry: docker.io
+#          dockerfile: Dockerfile
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build with Maven
-        run: mvn -B package -DskipTests --file pom.xml
-
-      - name: Upload JAR
-        uses: actions/upload-artifact@v4
-        with:
-          name: artifact
-          path: target/pqrs-0.0.1-SNAPSHOT.jar
-
-      - name: Build & push Docker image
-        uses: mr-smithers-excellent/docker-build-push@v6
-        with:
-          image: quirama11/pqrs-backend
-          tags: latest
-          registry: docker.io
-          dockerfile: Dockerfile
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Confirm image pushed
-        run: echo "✅ Imagen Docker subida a Docker Hub (quirama11/pqrs-backend:latest)"
+#      - name: Confirm image pushed
+#        run: echo "✅ Imagen Docker subida a Docker Hub (quirama11/pqrs-backend:latest)"
 
 
   # ---------------------------
   # 3. Deploy to Azure Web App
   # ---------------------------
-  deploy-azure:
-    needs: build
-    name: Deploy to Azure Web App
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
+#  deploy-azure:
+#    needs: build
+#    name: Deploy to Azure Web App
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: read
+#      id-token: write
 
-    env:
-      ADMIN_USERNAME: test_admin
-      ADMIN_PASSWORD: test_password
+#    env:
+#      ADMIN_USERNAME: test_admin
+#      ADMIN_PASSWORD: test_password
 
-    steps:
-      - uses: actions/checkout@v4
+#    steps:
+#      - uses: actions/checkout@v4
 
-      - name: Download artifact (JAR)
-        uses: actions/download-artifact@v4
-        with:
-          name: artifact
-          path: target/
+#      - name: Download artifact (JAR)
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: artifact
+#          path: target/
 
-      - name: Set up Java 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'microsoft'
+#      - name: Set up Java 17
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: '17'
+#          distribution: 'microsoft'
 
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BD1F808BCAF940AFBDB85580624283A5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A524B912B508488082AF3215225A4183 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C79D4330360E409A9E1E039132CA66DD }}
+#      - name: Login to Azure
+#        uses: azure/login@v2
+#        with:
+#          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BD1F808BCAF940AFBDB85580624283A5 }}
+#          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A524B912B508488082AF3215225A4183 }}
+#          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C79D4330360E409A9E1E039132CA66DD }}
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'citasalud-feature5'
-          slot-name: 'Production'
-          package: 'target/pqrs-0.0.1-SNAPSHOT.jar'
+#      - name: Deploy to Azure Web App
+#        uses: azure/webapps-deploy@v3
+#        with:
+#          app-name: 'citasalud-feature5'
+#          slot-name: 'Production'
+#          package: 'target/pqrs-0.0.1-SNAPSHOT.jar'
