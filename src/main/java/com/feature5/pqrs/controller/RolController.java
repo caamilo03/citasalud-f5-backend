@@ -66,7 +66,7 @@ public class RolController {
         @ApiResponse(responseCode = "404", description = "Rol no encontrado", content = @Content())
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarRol(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarRol(@PathVariable Long id) {
         if (rolService.eliminarRol(id)) {
             return ResponseEntity.ok().build();
         } else {

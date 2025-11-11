@@ -64,7 +64,7 @@ public class AuthController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content())
     })
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequest) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequestDTO loginRequest) {
         try {
             // Autenticar usuario usando el servicio
             UsuarioDTO usuario = usuarioService.login(
